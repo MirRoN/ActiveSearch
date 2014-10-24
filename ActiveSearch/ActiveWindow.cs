@@ -2,15 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using System.IO;
-    using System.Diagnostics;
 
     public partial class ActiveWindow : Form
     {
@@ -52,9 +48,17 @@
         {
             if (videoFilePath != string.Empty)
             {
+                resultDisplay.Text += "--------------------------------------------------"
+                    + Environment.NewLine + "Started splitting frames..." + System.Environment.NewLine;
+
                 Utils.ClearFolder("..\\Debug\\SplittedFiles");
                 string commandLine = "-i " + videoFilePath + " -sameq SplittedFiles/frame_num%05d.jpg";
                 Process.Start("ffmpeg_32.exe", commandLine);
+
+                resultDisplay.Text += "Done splitting frames..." + Environment.NewLine
+                    + "--------------------------------------------------"
+                    + Environment.NewLine;
+
             }
             else
             {
@@ -67,8 +71,8 @@
 
             if (advFramePath != string.Empty)
             {
-                resultDisplay.Text += "Started searching..."
-                    + System.Environment.NewLine;
+                resultDisplay.Text += "--------------------------------------------------"
+                    + Environment.NewLine + "Started searching..." + System.Environment.NewLine;
 
                 Task.Factory.StartNew(() =>
                     {
@@ -91,7 +95,7 @@
                             foreach (var item in matchFrames)
                             {
                                 resultDisplay.Text += "Video frame found at approximately: " + item.ToString() + " minute.";
-                                resultDisplay.Text += System.Environment.NewLine;
+                                resultDisplay.Text += Environment.NewLine;
                             }
                         }
                         else
@@ -99,8 +103,9 @@
                             MessageBox.Show("No matching frame or no video loaded!");
                         }
 
-                        resultDisplay.Text += "Done searching..."
-                            + System.Environment.NewLine;
+                        resultDisplay.Text += "Done searching..." + Environment.NewLine
+                            + "--------------------------------------------------"
+                            + Environment.NewLine;
                     });
 
             }
@@ -115,7 +120,18 @@
         {
             try
             {
-                Task.Factory.StartNew(() => Utils.ClearFolder("..\\Debug\\SplittedFiles"));
+                Task.Factory.StartNew(() =>
+                    {
+                        resultDisplay.Text += "--------------------------------------------------"
+                            + Environment.NewLine + "Started clearing folder..." 
+                            + System.Environment.NewLine;
+
+                        Utils.ClearFolder("..\\Debug\\SplittedFiles");
+
+                        resultDisplay.Text += "Done clearing folder..." + Environment.NewLine
+                            + "--------------------------------------------------"
+                            + Environment.NewLine;
+                    });
             }
             catch (Exception)
             {

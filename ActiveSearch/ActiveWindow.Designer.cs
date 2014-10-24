@@ -88,7 +88,6 @@
             // 
             // resultDisplay
             // 
-            this.resultDisplay.Enabled = false;
             this.resultDisplay.Location = new System.Drawing.Point(50, 310);
             this.resultDisplay.Multiline = true;
             this.resultDisplay.Name = "resultDisplay";
