@@ -39,31 +39,6 @@
             return colorMatrix;
         }
 
-        internal static List<long> CalcAllDiffInFolder(string folderPath)
-        {
-            string[] paths = Directory.GetFiles(folderPath, "*.jpg",
-                                     SearchOption.TopDirectoryOnly);
-            List<long> diff = new List<long>();
-
-            try
-            {
-                for (int i = 0; i < paths.Length - 1; i++)
-                {
-                    Bitmap bitmapOne = (Bitmap)Image.FromFile(paths[i], true);
-                    Bitmap bitmapTwo = (Bitmap)Image.FromFile(paths[i + 1], true);
-                    long differrence = Utils.CalcDifference(Utils.PortionOfImageToColorArray(bitmapOne, 130, 280, 170, 320),
-                    Utils.PortionOfImageToColorArray(bitmapTwo, 130, 280, 170, 320));
-                    diff.Add(differrence);
-                }
-
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                Console.WriteLine("There was an error opening the bitmap. Please check the path.");
-            }
-            return diff;
-        }
-
         internal static void ExportList(List<double> listOfDifferences, string outputFilePath)
         {
             StreamWriter wr = new StreamWriter(outputFilePath);
@@ -74,26 +49,6 @@
                     wr.WriteLine("Frame found approximately at: {0:#,##0}", item);
                 }
             }
-        }
-
-        internal static List<long> GetScenesPattern(List<long> list, long threshold)
-        {
-            List<long> intervals = new List<long>();
-            long count = 0;
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i] < threshold)
-                {
-                    count++;
-                }
-                else
-                {
-                    intervals.Add(count);
-                    count = 0;
-                }
-            }
-            intervals.Add(count);
-            return intervals;
         }
 
         internal static List<Color[,]> GetVideoFramesAsColorMatrix(string folderPath)
