@@ -1,10 +1,11 @@
 ﻿namespace ActiveSearch
 {
     using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.IO;
-    using System.Linq;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 
     public static class Utils
     {
@@ -58,6 +59,11 @@
             List<Color[,]> frames = new List<Color[,]>();
             for (int i = 0; i < paths.Length; i++)
             {
+                if (i % 3 != 0)
+                {
+                    continue;
+                }
+
                 frames.Add(Utils.PortionOfImageToColorArray(
                     new Bitmap(paths[i]), 135, 285, 165, 315));
             }

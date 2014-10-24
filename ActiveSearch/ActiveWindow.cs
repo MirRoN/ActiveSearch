@@ -64,33 +64,45 @@
 
         private void BeginSearch_Click(object sender, EventArgs e)
         {
+
             if (advFramePath != string.Empty)
             {
-                Color[,] advFrame = Utils.PortionOfImageToColorArray(
-                    new Bitmap(advFramePath), 135, 285, 165, 315);
-                List<Color[,]> videoFrames =
-                    Utils.GetVideoFramesAsColorMatrix("..\\Debug\\SplittedFiles");
+                resultDisplay.Text += "Started searching..."
+                    + System.Environment.NewLine;
 
-                List<double> matchFrames = new List<double>();
-                for (int i = 0; i < videoFrames.Count; i++)
-                {
-                    if (i % 3 != 0)
+                Task.Factory.StartNew(() =>
                     {
-                        continue;
-                    }
-                    if (Utils.CalcDifference(advFrame, videoFrames[i]) <= maxDiff)
-                    {
-                        matchFrames.Add(i / 1500.0);
-                    }
-                }
-                if (matchFrames.Count > 0)
-                {
-                    MessageBox.Show(matchFrames[0].ToString());
-                }
-                else
-                {
-                    MessageBox.Show("No matching frame or no video loaded!");
-                }
+                        Color[,] advFrame = Utils.PortionOfImageToColorArray(
+                            new Bitmap(advFramePath), 135, 285, 165, 315);
+                        List<Color[,]> videoFrames =
+                            Utils.GetVideoFramesAsColorMatrix("..\\Debug\\SplittedFiles");
+
+                        List<double> matchFrames = new List<double>();
+
+                        for (int i = 0; i < videoFrames.Count; i++)
+                        {
+                            if (Utils.CalcDifference(advFrame, videoFrames[i]) <= maxDiff)
+                            {
+                                matchFrames.Add(i / 500.0);
+                            }
+                        }
+                        if (matchFrames.Count > 0)
+                        {
+                            foreach (var item in matchFrames)
+                            {
+                                resultDisplay.Text += "Video frame found at approximately: " + item.ToString() + " minute.";
+                                resultDisplay.Text += System.Environment.NewLine;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No matching frame or no video loaded!");
+                        }
+
+                        resultDisplay.Text += "Done searching..."
+                            + System.Environment.NewLine;
+                    });
+
             }
             else
             {
@@ -103,7 +115,7 @@
         {
             try
             {
-                Utils.ClearFolder("..\\Debug\\SplittedFiles");
+                Task.Factory.StartNew(() => Utils.ClearFolder("..\\Debug\\SplittedFiles"));
             }
             catch (Exception)
             {
