@@ -31,8 +31,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.beginSearchButton = new System.Windows.Forms.Button();
+            this.unloadVideoButton = new System.Windows.Forms.Button();
+            this.resultDisplay = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -65,25 +66,36 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.SplitFrames_Click);
             // 
-            // button4
+            // beginSearchButton
             // 
-            this.button4.Location = new System.Drawing.Point(150, 240);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(500, 60);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Begin Search";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.BeginSearch_Click);
+            this.beginSearchButton.Location = new System.Drawing.Point(150, 240);
+            this.beginSearchButton.Name = "beginSearchButton";
+            this.beginSearchButton.Size = new System.Drawing.Size(500, 60);
+            this.beginSearchButton.TabIndex = 4;
+            this.beginSearchButton.Text = "Begin Search";
+            this.beginSearchButton.UseVisualStyleBackColor = true;
+            this.beginSearchButton.Click += new System.EventHandler(this.BeginSearch_Click);
             // 
-            // button5
+            // unloadVideoButton
             // 
-            this.button5.Location = new System.Drawing.Point(410, 170);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(240, 60);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "Unload video";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.UnloadVideoFrames_Click);
+            this.unloadVideoButton.Location = new System.Drawing.Point(410, 170);
+            this.unloadVideoButton.Name = "unloadVideoButton";
+            this.unloadVideoButton.Size = new System.Drawing.Size(240, 60);
+            this.unloadVideoButton.TabIndex = 5;
+            this.unloadVideoButton.Text = "Unload video";
+            this.unloadVideoButton.UseVisualStyleBackColor = true;
+            this.unloadVideoButton.Click += new System.EventHandler(this.UnloadVideoFrames_Click);
+            // 
+            // resultDisplay
+            // 
+            this.resultDisplay.Enabled = false;
+            this.resultDisplay.Location = new System.Drawing.Point(50, 310);
+            this.resultDisplay.Multiline = true;
+            this.resultDisplay.Name = "resultDisplay";
+            this.resultDisplay.ReadOnly = true;
+            this.resultDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.resultDisplay.Size = new System.Drawing.Size(700, 200);
+            this.resultDisplay.TabIndex = 6;
             // 
             // ActiveWindow
             // 
@@ -91,8 +103,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.resultDisplay);
+            this.Controls.Add(this.unloadVideoButton);
+            this.Controls.Add(this.beginSearchButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -102,6 +115,7 @@
             this.Name = "ActiveWindow";
             this.Text = "Active Search";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,8 +124,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button beginSearchButton;
+        private System.Windows.Forms.Button unloadVideoButton;
+        private System.Windows.Forms.TextBox resultDisplay;
     }
 }
 
